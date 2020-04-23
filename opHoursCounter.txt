@@ -1,0 +1,2 @@
+lastAcquisition=2020-04-23 23:58:43
+operatingTimeHours=18601.95
