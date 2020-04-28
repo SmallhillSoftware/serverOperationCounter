@@ -35,6 +35,22 @@ then
 		then
 			operatingTimeHours=${SPLIT_ARRAY[1]}
 			#echo "operatingTimeHours:$operatingTimeHours"
+		elif [[ ${SPLIT_ARRAY[0]}  =~ ^mainboardOpHours ]]
+		then
+			mainboardOpHours=${SPLIT_ARRAY[1]}
+			#echo "mainboardOpHours:$mainboardOpHours"
+		elif [[ ${SPLIT_ARRAY[0]}  =~ ^powersupplyOpHours ]]
+		then
+			powersupplyOpHours=${SPLIT_ARRAY[1]}
+			#echo "powersupplyOpHours:$powersupplyOpHours"
+		elif [[ ${SPLIT_ARRAY[0]}  =~ ^hddAOpHours ]]
+		then
+			hddAOpHours=${SPLIT_ARRAY[1]}
+			#echo "hddAOpHours:$hddAOpHours"
+		elif [[ ${SPLIT_ARRAY[0]}  =~ ^hddBOpHours ]]
+		then
+			hddBOpHours=${SPLIT_ARRAY[1]}
+			#echo "hddBOpHours:$hddBOpHours"			
 		fi
 	done < $opHoursCounterFile
 	assumedDiffToLastAcqTime=$(date --date="$lastAcqDateTime $totalDifferenceMinutes minutes" +"%Y-%m-%d %H:%M:%S")
@@ -48,23 +64,47 @@ then
 		durationHoursNowToPreviousAcq=$(bc <<<"scale=2; $durationSecondsNowToPreviousAcq / 3600")
 		#echo "durationHoursNowToPreviousAcq:$durationHoursNowToPreviousAcq"
 		operatingTimeHours=$(bc <<<"scale=2; $operatingTimeHours + $durationHoursNowToPreviousAcq")
+		mainboardOpHours=$(bc <<<"scale=2; $mainboardOpHours + $durationHoursNowToPreviousAcq")
+		powersupplyOpHours=$(bc <<<"scale=2; $powersupplyOpHours + $durationHoursNowToPreviousAcq")
+		hddAOpHours=$(bc <<<"scale=2; $hddAOpHours + $durationHoursNowToPreviousAcq")
+		hddBOpHours=$(bc <<<"scale=2; $hddBOpHours + $durationHoursNowToPreviousAcq")
 		#echo "increasing operatingTimeHours by durationHoursNowToPreviousAcq"
 		line2="operatingTimeHours=$operatingTimeHours"
+		line3="mainboardOpHours=$mainboardOpHours"
+		line4="powersupplyOpHours=$powersupplyOpHours"
+		line5="hddAOpHours=$hddAOpHours"
+		line6="hddBOpHours=$hddBOpHours"
 	else
 		#echo "keeping last operatingTimeHours"		
 		line2="operatingTimeHours=$operatingTimeHours"
+		line3="mainboardOpHours=$mainboardOpHours"
+		line4="powersupplyOpHours=$powersupplyOpHours"
+		line5="hddAOpHours=$hddAOpHours"
+		line6="hddBOpHours=$hddBOpHours"
 	fi
 	/bin/cat <<EOM >$opHoursCounterFile
 $line1
 $line2
+$line3
+$line4
+$line5
+$line6
 EOM
 else #else-branch of if [ -f "$opHoursCounterFile" ]
 	#echo "$opHoursCounterFile not found."
 	line1="lastAcquisition=$currentDateTime"
-	line2="operatingTimeHours=1"
+	line2="operatingTimeHours=0"
+	line3="mainboardOpHours=0"
+	line4="powersupplyOpHours=0"
+	line5="hddAOpHours=0"
+	line6="hddBOpHours=0"
 	/bin/cat <<EOM >$opHoursCounterFile
 $line1
 $line2
+$line3
+$line4
+$line5
+$line6
 EOM
 fi #end of if [ -f "$opHoursCounterFile" ]
 echo "$operatingTimeHours"

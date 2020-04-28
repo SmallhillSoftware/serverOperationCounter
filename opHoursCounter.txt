@@ -1,2 +1,6 @@
-lastAcquisition=2020-04-23 23:58:43
-operatingTimeHours=18601.95
+lastAcquisition=2020-04-28 23:07:01
+operatingTimeHours=68617.00
+mainboardOpHours=68617.00
+powersupplyOpHours=68617.00
+hddAOpHours=19225.00
+hddBOpHours=39.00
