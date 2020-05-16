@@ -9,35 +9,35 @@ if ($opCounterFile = fopen("/YOURDIRECTORY/opHoursCounter.txt", "r"))
 	while(!feof($opCounterFile))
 	{
 		$opCounterFileLine = fgets($opCounterFile, 4096);
-		if(strpos($opCounterFileLine, "peratingTimeHours"))
+		if(strpos($opCounterFileLine, "OperatingTimeHours") === 0)
 		{
 			$eqPos   = strpos($opCounterFileLine, "=");
 			$lenLine = strlen($opCounterFileLine);			
 			$opHours = substr($opCounterFileLine, ($eqPos+1), ($lenLine-($eqPos+1)));
 			$opHours = htmlspecialchars($opHours);
 		}
-		if(strpos($opCounterFileLine, "ainboardOpHours"))
+		if(strpos($opCounterFileLine, "MainboardOpHours") === 0)
 		{
 			$eqPos   = strpos($opCounterFileLine, "=");
 			$lenLine = strlen($opCounterFileLine);			
 			$opHoursMainboard = substr($opCounterFileLine, ($eqPos+1), ($lenLine-($eqPos+1)));
 			$opHoursMainboard = htmlspecialchars($opHoursMainboard);
 		}
-		if(strpos($opCounterFileLine, "ddAOpHours"))
+		if(strpos($opCounterFileLine, "PowersupplyOpHours") === 0)
+		{
+			$eqPos   = strpos($opCounterFileLine, "=");
+			$lenLine = strlen($opCounterFileLine);			
+			$opHoursPowerSupply = substr($opCounterFileLine, ($eqPos+1), ($lenLine-($eqPos+1)));
+			$opHoursPowerSupply = htmlspecialchars($opHoursPowerSupply);
+		}		
+		if(strpos($opCounterFileLine, "HddAOpHours") === 0)
 		{
 			$eqPos   = strpos($opCounterFileLine, "=");
 			$lenLine = strlen($opCounterFileLine);			
 			$opHoursHddA = substr($opCounterFileLine, ($eqPos+1), ($lenLine-($eqPos+1)));
 			$opHoursHddA = htmlspecialchars($opHoursHddA);
 		}		
-		if(strpos($opCounterFileLine, "owersupplyOpHours"))
-		{
-			$eqPos   = strpos($opCounterFileLine, "=");
-			$lenLine = strlen($opCounterFileLine);			
-			$opHoursPowerSupply = substr($opCounterFileLine, ($eqPos+1), ($lenLine-($eqPos+1)));
-			$opHoursPowerSupply = htmlspecialchars($opHoursPowerSupply);
-		}
-		if(strpos($opCounterFileLine, "ddBOpHours"))
+		if(strpos($opCounterFileLine, "HddBOpHours") === 0)
 		{
 			$eqPos   = strpos($opCounterFileLine, "=");
 			$lenLine = strlen($opCounterFileLine);			
